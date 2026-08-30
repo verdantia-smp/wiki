@@ -11,6 +11,47 @@
   <!-- Font Awesome 6 (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ----- базовые переменные (светлая тема по умолчанию) ----- */
+    :root {
+      --bg-body: #f7f5f0;
+      --bg-container: #ffffff;
+      --bg-card: #f2f0eb;
+      --bg-tag: #f0f0ea;
+      --bg-badge: #f2f0eb;
+      --text-primary: #1e1e1e;
+      --text-secondary: #2b342f;
+      --text-muted: #6a6f6a;
+      --text-heading: #1f2e2a;
+      --border-light: #e8e3da;
+      --border-soft: #ece7df;
+      --accent: #3b6b58;
+      --accent-light: #5f8a74;
+      --accent-pale: #c6d4c1;
+      --shadow: 0 12px 30px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.02);
+      --radius: 32px;
+      --radius-sm: 40px;
+    }
+
+    /* ----- тёмная тема ----- */
+    [data-theme="dark"] {
+      --bg-body: #1a1e1c;
+      --bg-container: #252b28;
+      --bg-card: #2f3632;
+      --bg-tag: #2f3632;
+      --bg-badge: #2f3632;
+      --text-primary: #e6ede8;
+      --text-secondary: #d3ddd6;
+      --text-muted: #a0b0a6;
+      --text-heading: #dcebe2;
+      --border-light: #3e4842;
+      --border-soft: #3a433d;
+      --accent: #7dae94;
+      --accent-light: #9bc0ab;
+      --accent-pale: #4e6b5c;
+      --shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+
+    /* ----- сброс и общие стили ----- */
     * {
       margin: 0;
       padding: 0;
@@ -18,24 +59,108 @@
     }
 
     body {
-      background: #f7f5f0;
+      background: var(--bg-body);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #1e1e1e;
+      color: var(--text-primary);
       line-height: 1.6;
       padding: 2rem 1rem;
+      transition: background 0.25s ease, color 0.2s ease;
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.02);
+      background: var(--bg-container);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       padding: 2.5rem 2.8rem;
-      transition: all 0.2s ease;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
     }
 
-    /* минималистичная типографика */
+    /* ----- панель управления (тема + язык) ----- */
+    .control-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .control-group i {
+      color: var(--accent-light);
+      font-size: 0.9rem;
+    }
+
+    .control-group select {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+      border-radius: 30px;
+      padding: 0.25rem 0.9rem 0.25rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      cursor: pointer;
+      outline: none;
+      transition: border 0.15s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236a726a'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.7rem center;
+      padding-right: 2rem;
+      min-width: 110px;
+    }
+
+    [data-theme="dark"] .control-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a0b0a6'/%3E%3C/svg%3E");
+      border-color: #3e4842;
+    }
+
+    .control-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 30px;
+      padding: 0.25rem 1rem 0.25rem 0.9rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s, border 0.15s;
+      line-height: 1.6;
+    }
+
+    .theme-toggle-btn i {
+      color: var(--accent-light);
+      font-size: 0.85rem;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-badge);
+    }
+
+    /* ----- типографика ----- */
     h1, h2, h3 {
       font-weight: 500;
       letter-spacing: -0.02em;
@@ -48,26 +173,26 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      color: #1f2e2a;
-      border-bottom: 2px solid #e8e3da;
+      color: var(--text-heading);
+      border-bottom: 2px solid var(--border-light);
       padding-bottom: 0.6rem;
     }
 
     h1 i {
-      color: #3b6b58;
+      color: var(--accent);
       font-size: 2rem;
       width: 2.2rem;
     }
 
     .subhead {
       font-size: 1rem;
-      color: #6a6f6a;
+      color: var(--text-muted);
       margin-top: -0.2rem;
       margin-bottom: 2rem;
       padding-left: 0.2rem;
       font-weight: 350;
       letter-spacing: 0.2px;
-      border-left: 3px solid #c6d4c1;
+      border-left: 3px solid var(--accent-pale);
       padding-left: 1rem;
     }
 
@@ -75,17 +200,17 @@
       font-size: 1.6rem;
       margin-top: 2.4rem;
       margin-bottom: 1rem;
-      color: #253b32;
+      color: var(--text-heading);
       font-weight: 500;
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      border-bottom: 1px solid #ece7df;
+      border-bottom: 1px solid var(--border-soft);
       padding-bottom: 0.35rem;
     }
 
     h2 i {
-      color: #4d7b66;
+      color: var(--accent-light);
       font-size: 1.4rem;
       width: 1.8rem;
     }
@@ -95,33 +220,33 @@
       margin-top: 1.8rem;
       margin-bottom: 0.5rem;
       font-weight: 500;
-      color: #2d463c;
+      color: var(--text-heading);
       display: flex;
       align-items: center;
       gap: 0.6rem;
     }
 
     h3 i {
-      color: #5f8a74;
+      color: var(--accent-light);
       font-size: 1.1rem;
       width: 1.6rem;
     }
 
     p {
       margin-bottom: 1rem;
-      color: #2b342f;
+      color: var(--text-secondary);
       font-weight: 350;
     }
 
     a {
-      color: #3b6b58;
+      color: var(--accent);
       text-decoration: none;
-      border-bottom: 1px dotted #b6cdbf;
+      border-bottom: 1px dotted var(--accent-pale);
       transition: border 0.15s;
     }
 
     a:hover {
-      border-bottom: 1px solid #3b6b58;
+      border-bottom: 1px solid var(--accent);
     }
 
     ul {
@@ -134,10 +259,11 @@
       display: flex;
       align-items: baseline;
       gap: 0.6rem;
+      color: var(--text-secondary);
     }
 
     ul li i {
-      color: #5f8a74;
+      color: var(--accent-light);
       width: 1.2rem;
       font-size: 0.9rem;
       text-align: center;
@@ -155,20 +281,22 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      background: #f2f0eb;
+      background: var(--bg-badge);
       padding: 0.3rem 1rem 0.3rem 0.8rem;
-      border-radius: 40px;
+      border-radius: var(--radius-sm);
       font-size: 0.9rem;
-      color: #1e2e26;
+      color: var(--text-primary);
       font-weight: 400;
       letter-spacing: 0.2px;
+      transition: background 0.2s;
     }
 
     .badge-item i {
-      color: #4d7b66;
+      color: var(--accent-light);
       font-size: 1rem;
     }
 
+    /* участники — убрали активных, но оставим стиль на будущее */
     .member-list {
       display: flex;
       flex-wrap: wrap;
@@ -177,34 +305,34 @@
     }
 
     .member-tag {
-      background: #f0f0ea;
+      background: var(--bg-tag);
       padding: 0.2rem 1rem 0.2rem 0.8rem;
-      border-radius: 40px;
+      border-radius: var(--radius-sm);
       font-size: 0.9rem;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      color: #1f3129;
+      color: var(--text-primary);
+      transition: background 0.2s;
     }
 
     .member-tag i {
-      color: #5f8a74;
+      color: var(--accent-light);
       font-size: 0.8rem;
     }
 
     hr {
       border: none;
-      border-top: 1.5px solid #eae5db;
+      border-top: 1.5px solid var(--border-light);
       margin: 2rem 0 1.2rem 0;
       opacity: 0.6;
     }
 
     .footer-note {
       font-size: 0.85rem;
-      color: #6a726a;
+      color: var(--text-muted);
       margin-top: 2.2rem;
-      text-align: right;
-      border-top: 1px solid #ece7df;
+      border-top: 1px solid var(--border-soft);
       padding-top: 1.2rem;
       display: flex;
       justify-content: space-between;
@@ -214,7 +342,7 @@
     }
 
     .footer-note i {
-      color: #6f8f7c;
+      color: var(--accent-light);
       margin: 0 0.2rem;
     }
 
@@ -229,158 +357,235 @@
       h1 { font-size: 2rem; flex-wrap: wrap; }
       .subhead { font-size: 0.95rem; }
       .badge-grid { gap: 0.8rem; }
+      .control-bar { justify-content: flex-start; }
     }
 
-    /* убираем точки у списков */
-    .no-dots {
-      list-style: none;
-      padding-left: 0;
+    /* скрыть элементы, если нужно */
+    .no-dots { list-style: none; padding-left: 0; }
+
+    /* анимация для плавной смены */
+    .container, .badge-item, .member-tag, .theme-toggle-btn, .control-group select {
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
   </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- заголовок -->
-  <h1>
-    <i class="fas fa-leaf"></i> Verdantia SMP
-  </h1>
-  <div class="subhead">
-    <i class="fas fa-tree" style="margin-right: 6px; color: #607d6b;"></i> 
-    минималистичная вики · мир, где природа и сообщество переплетаются
+<div class="container" id="wikiContainer">
+
+  <!-- панель управления: тема + язык -->
+  <div class="control-bar">
+    <div class="control-group">
+      <i class="fas fa-palette"></i>
+      <button class="theme-toggle-btn" id="themeToggle" aria-label="Переключить тему">
+        <i class="fas fa-moon" id="themeIcon"></i> <span id="themeLabel">Тёмная</span>
+      </button>
+    </div>
+    <div class="control-group">
+      <i class="fas fa-globe"></i>
+      <select id="langSelect" aria-label="Выбор языка">
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="en">🇬🇧 English</option>
+      </select>
+    </div>
   </div>
 
-  <!-- краткое описание -->
+  <!-- ====== контент вики (переводы через data- атрибуты) ====== -->
+  <h1><i class="fas fa-leaf"></i> <span data-key="title">Verdantia SMP</span></h1>
+  <div class="subhead">
+    <i class="fas fa-tree" style="margin-right: 6px;"></i>
+    <span data-key="subhead">минималистичная вики · мир, где природа и сообщество переплетаются</span>
+  </div>
+
   <p style="font-size: 1.05rem; font-weight: 350; margin-top: 0.2rem;">
-    <i class="fas fa-seedling" style="color: #4d7b66; margin-right: 8px;"></i>
-    <strong>Verdantia SMP</strong> — это приватный выживальческий сервер с акцентом на 
-    эстетику, устойчивое развитие и сотрудничество. Здесь ценят тишину лесов, 
-    архитектуру в гармонии с ландшафтом и общие проекты.
+    <i class="fas fa-seedling" style="color: var(--accent-light); margin-right: 8px;"></i>
+    <span data-key="intro"><strong>Verdantia SMP</strong> — это приватный выживальческий сервер с акцентом на эстетику, устойчивое развитие и сотрудничество. Здесь ценят тишину лесов, архитектуру в гармонии с ландшафтом и общие проекты.</span>
   </p>
 
-  <!-- краткие факты (значки) -->
+  <!-- краткие факты -->
   <div class="badge-grid">
-    <span class="badge-item"><i class="fas fa-calendar-alt"></i> Основан: весна 2024</span>
-    <span class="badge-item"><i class="fas fa-users"></i> 12 активных участников</span>
-    <span class="badge-item"><i class="fas fa-globe-americas"></i> Версия: 1.20.4</span>
-    <span class="badge-item"><i class="fas fa-gem"></i> Ванька + датапаки</span>
+    <span class="badge-item"><i class="fas fa-calendar-alt"></i> <span data-key="badge1">Основан: весна 2024</span></span>
+    <span class="badge-item"><i class="fas fa-users"></i> <span data-key="badge2">12 активных участников</span></span>
+    <span class="badge-item"><i class="fas fa-globe-americas"></i> <span data-key="badge3">Версия: 1.20.4</span></span>
+    <span class="badge-item"><i class="fas fa-gem"></i> <span data-key="badge4">Ванька + датапаки</span></span>
   </div>
 
   <!-- раздел: о мире -->
-  <h2><i class="fas fa-mountain"></i> О мире</h2>
+  <h2><i class="fas fa-mountain"></i> <span data-key="h2_world">О мире</span></h2>
   <p>
-    <i class="fas fa-map-pin" style="color: #5f8a74; margin-right: 6px;"></i>
-    Мир Verdantia — это обширный континент с умеренным климатом, древними лесами, 
-    горными хребтами и спокойными реками. Генерация мира дополнена кастомными 
-    структурами и биомами, но главное — дух <strong>«зелёного строительства»</strong>: 
-    постройки вписываются в ландшафт, используются натуральные блоки, а фермы 
-    проектируются с уважением к окружению.
+    <i class="fas fa-map-pin" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="world_p1">Мир Verdantia — это обширный континент с умеренным климатом, древними лесами, горными хребтами и спокойными реками. Генерация мира дополнена кастомными структурами и биомами, но главное — дух <strong>«зелёного строительства»</strong>: постройки вписываются в ландшафт, используются натуральные блоки, а фермы проектируются с уважением к окружению.</span>
   </p>
   <p>
-    <i class="fas fa-feather-alt" style="color: #5f8a74; margin-right: 6px;"></i>
-    На сервере действует <strong>«Древесный пакт»</strong> — каждый участник обязуется 
-    высаживать как минимум два дерева за каждое срубленное. Это поддерживает 
-    зелёный баланс и даёт ресурсы для будущих поколений игроков.
+    <i class="fas fa-feather-alt" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="world_p2">На сервере действует <strong>«Древесный пакт»</strong> — каждый участник обязуется высаживать как минимум два дерева за каждое срубленное. Это поддерживает зелёный баланс и даёт ресурсы для будущих поколений игроков.</span>
   </p>
 
-  <!-- раздел: правила и особенности -->
-  <h2><i class="fas fa-feather"></i> Особенности</h2>
+  <!-- раздел: особенности -->
+  <h2><i class="fas fa-feather"></i> <span data-key="h2_features">Особенности</span></h2>
   <ul>
-    <li><i class="fas fa-check-circle"></i> <strong>Эстетика:</strong> поощряются постройки в стиле «organic», использование дерева, камня, терракоты и стекла.</li>
-    <li><i class="fas fa-check-circle"></i> <strong>Кооперация:</strong> общие ресурсные базы, почтовые станции и дороги между базами.</li>
-    <li><i class="fas fa-check-circle"></i> <strong>События:</strong> ежемесячные «Дни посадки», строительные джэмы и ночные ярмарки.</li>
-    <li><i class="fas fa-check-circle"></i> <strong>Датапаки:</strong> моб-головы, более удобные крафты, улучшенные стойки для брони.</li>
+    <li><i class="fas fa-check-circle"></i> <span data-key="f1"><strong>Эстетика:</strong> поощряются постройки в стиле «organic», использование дерева, камня, терракоты и стекла.</span></li>
+    <li><i class="fas fa-check-circle"></i> <span data-key="f2"><strong>Кооперация:</strong> общие ресурсные базы, почтовые станции и дороги между базами.</span></li>
+    <li><i class="fas fa-check-circle"></i> <span data-key="f3"><strong>События:</strong> ежемесячные «Дни посадки», строительные джэмы и ночные ярмарки.</span></li>
+    <li><i class="fas fa-check-circle"></i> <span data-key="f4"><strong>Датапаки:</strong> моб-головы, более удобные крафты, улучшенные стойки для брони.</span></li>
   </ul>
-
-  <!-- раздел: участники -->
-  <h2><i class="fas fa-user-friends"></i> Участники</h2>
-  <p style="margin-bottom: 0.5rem;">Активные жители Вердантии (в алфавитном порядке):</p>
-  <div class="member-list">
-    <span class="member-tag"><i class="fas fa-paw"></i> Aeliana</span>
-    <span class="member-tag"><i class="fas fa-crow"></i> Birk</span>
-    <span class="member-tag"><i class="fas fa-tree"></i> Caelus</span>
-    <span class="member-tag"><i class="fas fa-moon"></i> Dusk</span>
-    <span class="member-tag"><i class="fas fa-feather"></i> Elara</span>
-    <span class="member-tag"><i class="fas fa-fish"></i> Finn</span>
-    <span class="member-tag"><i class="fas fa-cloud-sun"></i> Haze</span>
-    <span class="member-tag"><i class="fas fa-seedling"></i> Lian</span>
-    <span class="member-tag"><i class="fas fa-mountain"></i> Orin</span>
-    <span class="member-tag"><i class="fas fa-wind"></i> Soren</span>
-    <span class="member-tag"><i class="fas fa-leaf"></i> Thalia</span>
-    <span class="member-tag"><i class="fas fa-campground"></i> Vesper</span>
-  </div>
-  <p style="margin-top: 0.8rem; font-size: 0.95rem; color: #3f574a;">
-    <i class="fas fa-arrow-right" style="margin-right: 4px;"></i> 
-    Каждый участник вносит свой вклад в общую атмосферу — от ферм до библиотек.
-  </p>
 
   <!-- раздел: поселения -->
-  <h2><i class="fas fa-home"></i> Поселения</h2>
+  <h2><i class="fas fa-home"></i> <span data-key="h2_settlements">Поселения</span></h2>
   <ul>
-    <li><i class="fas fa-city"></i> <strong>Солнечный ручей</strong> — центральное поселение, ратуша, общая ферма и портал в Незер.</li>
-    <li><i class="fas fa-cabin"></i> <strong>Лесная тишь</strong> — уютные домики в кронах деревьев, главный центр древесного хозяйства.</li>
-    <li><i class="fas fa-water"></i> <strong>Озёрный край</strong> — рыбацкие деревни и стеклянные теплицы на воде.</li>
-    <li><i class="fas fa-mountain"></i> <strong>Кремниевый пик</strong> — шахтёрский посёлок с кузницами и обсерваторией.</li>
+    <li><i class="fas fa-city"></i> <span data-key="s1"><strong>Солнечный ручей</strong> — центральное поселение, ратуша, общая ферма и портал в Незер.</span></li>
+    <li><i class="fas fa-cabin"></i> <span data-key="s2"><strong>Лесная тишь</strong> — уютные домики в кронах деревьев, главный центр древесного хозяйства.</span></li>
+    <li><i class="fas fa-water"></i> <span data-key="s3"><strong>Озёрный край</strong> — рыбацкие деревни и стеклянные теплицы на воде.</span></li>
+    <li><i class="fas fa-mountain"></i> <span data-key="s4"><strong>Кремниевый пик</strong> — шахтёрский посёлок с кузницами и обсерваторией.</span></li>
   </ul>
 
-  <!-- раздел: ресурсы и экономика -->
-  <h2><i class="fas fa-coins"></i> Экономика</h2>
+  <!-- раздел: экономика -->
+  <h2><i class="fas fa-coins"></i> <span data-key="h2_economy">Экономика</span></h2>
   <p>
-    <i class="fas fa-exchange-alt" style="color: #5f8a74; margin-right: 6px;"></i>
-    На сервере действует бартерная система, основанная на <strong>«зелёных жетонах»</strong> 
-    (изумрудах). Торговля между игроками приветствуется, но нет строгой валюты — 
-    ценятся услуги, редкие блоки и строительные материалы.
+    <i class="fas fa-exchange-alt" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="eco_p1">На сервере действует бартерная система, основанная на <strong>«зелёных жетонах»</strong> (изумрудах). Торговля между игроками приветствуется, но нет строгой валюты — ценятся услуги, редкие блоки и строительные материалы.</span>
   </p>
   <p>
-    <i class="fas fa-boxes" style="color: #5f8a74; margin-right: 6px;"></i>
-    Общие склады ресурсов пополняются добровольными взносами. Особо ценятся 
-    <strong>древесина, камень, стекло и шерсть</strong> — основные стройматериалы Вердантии.
+    <i class="fas fa-boxes" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="eco_p2">Общие склады ресурсов пополняются добровольными взносами. Особо ценятся <strong>древесина, камень, стекло и шерсть</strong> — основные стройматериалы Вердантии.</span>
   </p>
 
   <!-- раздел: традиции -->
-  <h2><i class="fas fa-calendar-check"></i> Традиции</h2>
+  <h2><i class="fas fa-calendar-check"></i> <span data-key="h2_traditions">Традиции</span></h2>
   <ul>
-    <li><i class="fas fa-tree"></i> <strong>День Саженца</strong> — каждую субботу все вместе высаживают лесные массивы.</li>
-    <li><i class="fas fa-fire"></i> <strong>Вечер костра</strong> — еженедельные посиделки с рассказами, обменом ресурсами и планами.</li>
-    <li><i class="fas fa-pencil-ruler"></i> <strong>Строительный джем</strong> — раз в месяц все строят один общий объект (мост, маяк, парк).</li>
-    <li><i class="fas fa-scroll"></i> <strong>Летопись</strong> — участники ведут общую книгу событий и достижений.</li>
+    <li><i class="fas fa-tree"></i> <span data-key="t1"><strong>День Саженца</strong> — каждую субботу все вместе высаживают лесные массивы.</span></li>
+    <li><i class="fas fa-fire"></i> <span data-key="t2"><strong>Вечер костра</strong> — еженедельные посиделки с рассказами, обменом ресурсами и планами.</span></li>
+    <li><i class="fas fa-pencil-ruler"></i> <span data-key="t3"><strong>Строительный джем</strong> — раз в месяц все строят один общий объект (мост, маяк, парк).</span></li>
+    <li><i class="fas fa-scroll"></i> <span data-key="t4"><strong>Летопись</strong> — участники ведут общую книгу событий и достижений.</span></li>
   </ul>
 
-  <!-- раздел: как присоединиться -->
-  <h2><i class="fas fa-door-open"></i> Как попасть</h2>
+  <!-- раздел: как попасть -->
+  <h2><i class="fas fa-door-open"></i> <span data-key="h2_join">Как попасть</span></h2>
   <p>
-    <i class="fas fa-envelope" style="color: #5f8a74; margin-right: 6px;"></i>
-    Verdantia SMP — закрытое сообщество. Присоединение возможно по приглашению 
-    действующих участников или через заполнение небольшой <strong>анкеты-эссе</strong> 
-    (расскажите о своём стиле игры и любимых блоках). 
+    <i class="fas fa-envelope" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="join_p1">Verdantia SMP — закрытое сообщество. Присоединение возможно по приглашению действующих участников или через заполнение небольшой <strong>анкеты-эссе</strong> (расскажите о своём стиле игры и любимых блоках).</span>
   </p>
   <p>
-    <i class="fas fa-shield-alt" style="color: #5f8a74; margin-right: 6px;"></i>
-    Мы ищем игроков, которые разделяют ценности <strong>сотрудничества, уважения к миру 
-    и творческого подхода</strong>. Гриферство и варварское отношение к природе 
-    строго запрещены.
+    <i class="fas fa-shield-alt" style="color: var(--accent-light); margin-right: 6px;"></i>
+    <span data-key="join_p2">Мы ищем игроков, которые разделяют ценности <strong>сотрудничества, уважения к миру и творческого подхода</strong>. Гриферство и варварское отношение к природе строго запрещены.</span>
   </p>
 
-  <!-- раздел: ссылки и контакты (минималистично) -->
   <hr>
   <div style="display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 0.6rem 0 0.2rem 0;">
-    <span style="display: flex; align-items: center; gap: 0.4rem; background: #f2f0eb; padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: 40px;">
-      <i class="fab fa-discord" style="color: #4b7a64;"></i> discord.gg/verdantia
+    <span style="display: flex; align-items: center; gap: 0.4rem; background: var(--bg-card); padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: var(--radius-sm);">
+      <i class="fab fa-discord" style="color: var(--accent-light);"></i> discord.gg/verdantia
     </span>
-    <span style="display: flex; align-items: center; gap: 0.4rem; background: #f2f0eb; padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: 40px;">
-      <i class="fas fa-globe" style="color: #4b7a64;"></i> verdantia-smp.net
+    <span style="display: flex; align-items: center; gap: 0.4rem; background: var(--bg-card); padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: var(--radius-sm);">
+      <i class="fas fa-globe" style="color: var(--accent-light);"></i> verdantia-smp.net
     </span>
-    <span style="display: flex; align-items: center; gap: 0.4rem; background: #f2f0eb; padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: 40px;">
-      <i class="fab fa-github" style="color: #4b7a64;"></i> /verdantia-mc
+    <span style="display: flex; align-items: center; gap: 0.4rem; background: var(--bg-card); padding: 0.2rem 1rem 0.2rem 0.8rem; border-radius: var(--radius-sm);">
+      <i class="fab fa-github" style="color: var(--accent-light);"></i> /verdantia-mc
     </span>
   </div>
 
-  <!-- футер с минималистичной информацией -->
   <div class="footer-note">
     <span><i class="fas fa-leaf"></i> Verdantia SMP · 2026</span>
-    <span><i class="fas fa-pen-fancy"></i> вики обновлена 30.08.2026</span>
+    <span><i class="fas fa-pen-fancy"></i> <span data-key="footer_update">вики обновлена 30.08.2026</span></span>
   </div>
 
 </div> <!-- end container -->
-</body>
-</html>
+
+<script>
+  (function() {
+    'use strict';
+
+    // --- словарь переводов (только ключевые фразы) ---
+    const translations = {
+      ru: {
+        title: 'Verdantia SMP',
+        subhead: 'минималистичная вики · мир, где природа и сообщество переплетаются',
+        intro: '<strong>Verdantia SMP</strong> — это приватный выживальческий сервер с акцентом на эстетику, устойчивое развитие и сотрудничество. Здесь ценят тишину лесов, архитектуру в гармонии с ландшафтом и общие проекты.',
+        badge1: 'Основан: весна 2024',
+        badge2: '12 активных участников',
+        badge3: 'Версия: 1.20.4',
+        badge4: 'Ванька + датапаки',
+        h2_world: 'О мире',
+        world_p1: 'Мир Verdantia — это обширный континент с умеренным климатом, древними лесами, горными хребтами и спокойными реками. Генерация мира дополнена кастомными структурами и биомами, но главное — дух <strong>«зелёного строительства»</strong>: постройки вписываются в ландшафт, используются натуральные блоки, а фермы проектируются с уважением к окружению.',
+        world_p2: 'На сервере действует <strong>«Древесный пакт»</strong> — каждый участник обязуется высаживать как минимум два дерева за каждое срубленное. Это поддерживает зелёный баланс и даёт ресурсы для будущих поколений игроков.',
+        h2_features: 'Особенности',
+        f1: '<strong>Эстетика:</strong> поощряются постройки в стиле «organic», использование дерева, камня, терракоты и стекла.',
+        f2: '<strong>Кооперация:</strong> общие ресурсные базы, почтовые станции и дороги между базами.',
+        f3: '<strong>События:</strong> ежемесячные «Дни посадки», строительные джэмы и ночные ярмарки.',
+        f4: '<strong>Датапаки:</strong> моб-головы, более удобные крафты, улучшенные стойки для брони.',
+        h2_settlements: 'Поселения',
+        s1: '<strong>Солнечный ручей</strong> — центральное поселение, ратуша, общая ферма и портал в Незер.',
+        s2: '<strong>Лесная тишь</strong> — уютные домики в кронах деревьев, главный центр древесного хозяйства.',
+        s3: '<strong>Озёрный край</strong> — рыбацкие деревни и стеклянные теплицы на воде.',
+        s4: '<strong>Кремниевый пик</strong> — шахтёрский посёлок с кузницами и обсерваторией.',
+        h2_economy: 'Экономика',
+        eco_p1: 'На сервере действует бартерная система, основанная на <strong>«зелёных жетонах»</strong> (изумрудах). Торговля между игроками приветствуется, но нет строгой валюты — ценятся услуги, редкие блоки и строительные материалы.',
+        eco_p2: 'Общие склады ресурсов пополняются добровольными взносами. Особо ценятся <strong>древесина, камень, стекло и шерсть</strong> — основные стройматериалы Вердантии.',
+        h2_traditions: 'Традиции',
+        t1: '<strong>День Саженца</strong> — каждую субботу все вместе высаживают лесные массивы.',
+        t2: '<strong>Вечер костра</strong> — еженедельные посиделки с рассказами, обменом ресурсами и планами.',
+        t3: '<strong>Строительный джем</strong> — раз в месяц все строят один общий объект (мост, маяк, парк).',
+        t4: '<strong>Летопись</strong> — участники ведут общую книгу событий и достижений.',
+        h2_join: 'Как попасть',
+        join_p1: 'Verdantia SMP — закрытое сообщество. Присоединение возможно по приглашению действующих участников или через заполнение небольшой <strong>анкеты-эссе</strong> (расскажите о своём стиле игры и любимых блоках).',
+        join_p2: 'Мы ищем игроков, которые разделяют ценности <strong>сотрудничества, уважения к миру и творческого подхода</strong>. Гриферство и варварское отношение к природе строго запрещены.',
+        footer_update: 'вики обновлена 30.08.2026'
+      },
+      en: {
+        title: 'Verdantia SMP',
+        subhead: 'minimalist wiki · a world where nature and community intertwine',
+        intro: '<strong>Verdantia SMP</strong> is a private survival server focused on aesthetics, sustainable development, and cooperation. Here, the quiet of the forests, architecture in harmony with the landscape, and shared projects are valued.',
+        badge1: 'Founded: spring 2024',
+        badge2: '12 active members',
+        badge3: 'Version: 1.20.4',
+        badge4: 'Vanilla + datapacks',
+        h2_world: 'About the world',
+        world_p1: 'The world of Verdantia is a vast continent with a temperate climate, ancient forests, mountain ranges and calm rivers. World generation is supplemented with custom structures and biomes, but the main thing is the spirit of <strong>“green building”</strong>: buildings fit into the landscape, natural blocks are used, and farms are designed with respect for the environment.',
+        world_p2: 'The server has a <strong>“Tree Pact”</strong> — every member undertakes to plant at least two trees for each one cut down. This maintains a green balance and provides resources for future generations of players.',
+        h2_features: 'Features',
+        f1: '<strong>Aesthetics:</strong> buildings in “organic” style, using wood, stone, terracotta and glass are encouraged.',
+        f2: '<strong>Cooperation:</strong> shared resource bases, postal stations and roads between bases.',
+        f3: '<strong>Events:</strong> monthly “Planting Days”, building jams and night fairs.',
+        f4: '<strong>Datapacks:</strong> mob heads, more convenient crafting, improved armor stands.',
+        h2_settlements: 'Settlements',
+        s1: '<strong>Sunny Brook</strong> — central settlement, town hall, communal farm and Nether portal.',
+        s2: '<strong>Forest Quiet</strong> — cozy treehouses, the main center of forestry.',
+        s3: '<strong>Lakeside</strong> — fishing villages and glass greenhouses on the water.',
+        s4: '<strong>Silicon Peak</strong> — miners\' village with forges and an observatory.',
+        h2_economy: 'Economy',
+        eco_p1: 'The server has a barter system based on <strong>“green tokens”</strong> (emeralds). Trading between players is welcome, but there is no strict currency — services, rare blocks and building materials are valued.',
+        eco_p2: 'Common resource warehouses are replenished by voluntary contributions. <strong>Wood, stone, glass and wool</strong> are especially valuable — the main building materials of Verdantia.',
+        h2_traditions: 'Traditions',
+        t1: '<strong>Sapling Day</strong> — every Saturday everyone plants forests together.',
+        t2: '<strong>Campfire Evening</strong> — weekly gatherings with stories, resource exchange and plans.',
+        t3: '<strong>Building Jam</strong> — once a month everyone builds one common structure (bridge, lighthouse, park).',
+        t4: '<strong>Chronicle</strong> — members keep a common book of events and achievements.',
+        h2_join: 'How to join',
+        join_p1: 'Verdantia SMP is a closed community. Joining is possible by invitation from existing members or by filling out a short <strong>essay questionnaire</strong> (tell about your playstyle and favorite blocks).',
+        join_p2: 'We are looking for players who share the values of <strong>cooperation, respect for the world and creative approach</strong>. Griefing and barbaric treatment of nature are strictly prohibited.',
+        footer_update: 'wiki updated 30.08.2026'
+      }
+    };
+
+    // --- элементы управления ---
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    const langSelect = document.getElementById('langSelect');
+
+    // --- 1. ТЕМА (сохранение в localStorage) ---
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('verdantia-theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'fas fa-sun';
+        themeLabel.textContent = 'Светлая';
+      } else {
+        themeIcon.className = 'fas fa-moon';
+        themeLabel.textContent = 'Тёмная';
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      setTheme
