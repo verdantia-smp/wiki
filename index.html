@@ -588,4 +588,42 @@
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme') || 'light';
       const next = current === 'light' ? 'dark' : 'light';
-      setTheme
+      setTheme(next);
+    }
+
+    // загрузка сохранённой темы
+    const savedTheme = localStorage.getItem('verdantia-theme') || 'light';
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // --- 2. ЯЗЫК (перевод + сохранение) ---
+    function applyLanguage(lang) {
+      const dict = translations[lang] || translations.ru;
+      const elements = document.querySelectorAll('[data-key]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (dict[key] !== undefined) {
+          el.innerHTML = dict[key];
+        }
+      });
+      localStorage.setItem('verdantia-lang', lang);
+      langSelect.value = lang;
+    }
+
+    // загрузка сохранённого языка
+    const savedLang = localStorage.getItem('verdantia-lang') || 'ru';
+    applyLanguage(savedLang);
+
+    langSelect.addEventListener('change', function(e) {
+      applyLanguage(e.target.value);
+    });
+
+    // дополнительно: если меняется тема, не сбрасываем язык
+    // всё готово.
+
+  })();
+</script>
+
+</body>
+</html>
